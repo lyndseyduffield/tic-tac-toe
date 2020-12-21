@@ -1,80 +1,85 @@
 import React, { useState } from "react";
 import "./App.css";
 
-enum Symbol {
+enum Player {
   X,
   O,
 }
 
-const toggleSymbol = (symbol: Symbol): Symbol => {
-  if (symbol === Symbol.X) {
-    return Symbol.O;
+const togglePlayer = (player: Player): Player => {
+  if (player === Player.X) {
+    return Player.O;
   } else {
-    return Symbol.X;
+    return Player.X;
   }
 };
 
-type SquareStatus = Symbol | null;
+type Square = Player | null;
 
-interface Square {
-  contains: SquareStatus;
-}
+const emptySquare: Square = null;
 
-const emptySquare: Square = { contains: null };
+type Row = [Square, Square, Square];
 
-const renderSquareStatus = (value: SquareStatus) => {
+const emptyRow: Row = [emptySquare, emptySquare, emptySquare];
+
+type Board = [Row, Row, Row];
+
+const emptyBoard: Board = [emptyRow, emptyRow, emptyRow];
+
+const squareToString = (value: Square) => {
   switch (value) {
-    case Symbol.X:
+    case Player.X:
       return "X";
-    case Symbol.O:
+    case Player.O:
       return "O";
     default:
       return "";
   }
 };
 
-interface AppState {
-  nextPlay: Symbol;
-  squares: [Square];
-}
-
 function App() {
-  const [nextPlay, setNextPlay] = useState(Symbol.X);
+  const [nextPlay, setNextPlay] = useState<Player>(Player.X);
+  const [board, setBoard] = useState<Board>(emptyBoard);
 
-  const [squares, setSquares] = useState([
-    emptySquare,
-    emptySquare,
-    emptySquare,
-    emptySquare,
-    emptySquare,
-    emptySquare,
-    emptySquare,
-    emptySquare,
-    emptySquare,
-  ]);
-
-  const renderSquare = (square: Square, index: number) => (
+  const renderSquare = (
+    square: Square,
+    rowIndex: number,
+    squareIndex: number
+  ) => (
     <div
-      onClick={() => handleSquareClick(square.contains, index)}
+      onClick={() => handleSquareClick(square, rowIndex, squareIndex)}
       className="Square"
     >
-      {renderSquareStatus(square.contains)}
+      {squareToString(square)}
     </div>
   );
 
-  const handleSquareClick = (status: SquareStatus, index: number) => {
+  const handleSquareClick = (
+    status: Square,
+    rowIndex: number,
+    squareIndex: number
+  ) => {
     if (status === null) {
-      const next = toggleSymbol(nextPlay);
-      let newSquares = Array.from(squares);
-      newSquares[index] = { contains: nextPlay };
-      setSquares(newSquares);
+      const next: Player = togglePlayer(nextPlay);
+      // TypeScript has no good way to deep-copy a tuple without
+      // the resulting type being an array. Instead, we copy the
+      // two layers of the board and cast the type to Board.
+      let newBoard: Board = board.map((row) => [...row]) as Board;
+      newBoard[rowIndex][squareIndex] = nextPlay;
+      setBoard(newBoard);
       setNextPlay(next);
     }
   };
 
   return (
     <div className="App">
-      <div className="Grid">{squares.map(renderSquare)}</div>
+      <div className="Grid">
+        {board.map((row, rowIndex) =>
+          row.map((square, squareIndex) =>
+            renderSquare(square, rowIndex, squareIndex)
+          )
+        )}
+      </div>
     </div>
   );
 }
