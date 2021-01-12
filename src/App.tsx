@@ -193,48 +193,16 @@ const checkVerticalWinner = (board: Board): boolean => {
 
 
 const checkDiagonalWinner = (board: Board): boolean => {
-  let allThree = false;
+  let allThree = false; 
 
-  let keepTrack: Board = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null]
-  ]
-  
-  board.forEach((row, rowIndex) => {
-    const X = Player.X;
-    const O = Player.O;
-    
-    row.forEach((item, index) => {
-      if (item === X && index === 0) {
-        keepTrack[rowIndex][0] = X
-      }
-      if (item === X && index === 1) {
-        keepTrack[rowIndex][1] = X
-      }
-      if (item === X && index === 2) {
-        keepTrack[rowIndex][2] = X
-      }
-      if (item === O && index === 0) {
-        keepTrack[rowIndex][0] = O;
-      }
-      if (item === O && index === 1) {
-        keepTrack[rowIndex][1] = O; 
-      }
-      if (item === O && index === 2) {
-        keepTrack[rowIndex][2] = O;
-      }
-    });
-
-    if ( (keepTrack[0][0] === X && keepTrack[1][1] === X && keepTrack[2][2] === X) || (keepTrack[0][2] === X && keepTrack[1][1] === X && keepTrack[2][0] === X) ) {
+  const checkIndices = (player: Player) => {
+    if ( (board[0][0] === player && board[1][1] === player && board[2][2] === player) || (board[0][2] === player && board[1][1] === player && board[2][0] === player) ) {
       allThree = true;
-    }
+    } 
+  }
 
-    if ( (keepTrack[0][0] === O && keepTrack[1][1] === O && keepTrack[2][2] === O) || (keepTrack[0][2] === O && keepTrack[1][1] === O && keepTrack[2][0] === O) ) {
-      allThree = true;
-    }
-
-  })
+  checkIndices(Player.X);
+  checkIndices(Player.O);
 
   return allThree;
 }
