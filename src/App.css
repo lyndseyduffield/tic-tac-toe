@@ -1,19 +1,157 @@
+:root {
+  --white: #f8f9fa;
+  --grey-light: #dee2e6;
+  --grey: #adb5bd;
+  --grey-dark: #495057;
+  --black: #212529;
+
+  --green-extra-light: #d7e9ea;
+  --green-lighter: #bcdbdc;
+  --green-light: #89bfc0;
+  --green: #549da0;
+  --green-dark: #3c6e71;
+  --green-darkest: #2a4e50;
+
+  --blue-lighest: #c5dae7;
+  --blue-light: #7eabc9;
+  --blue: #42799e;
+  --blue-dark: #284b63;
+  --blue-darkest: #495057;
+
+  --font-xxl: 48px;
+  --font-xl: 32px;
+  --font-lg: 42px;
+  --font-md: 24px;
+  --font-sm: 16px;
+  --font-xs: 12px;
+
+  --spacing-3xs: calc(var(--spacing-2xs) / 2);
+  --spacing-2xs: 0.25rem;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  --spacing-4xl: 6rem;
+  --spacing-5xl: 8rem;
+  --spacing-6xl: 12rem;
+  --spacing-7xl: 16rem;
+  --spacing-8xl: 24rem;
+  --spacing-9xl: 32rem;
+  --spacing-10xl: 40rem;
+  --spacing-11xl: 48rem;
+  --spacing-12xl: 60rem;
+  --spacing-13xl: 72rem;
+  --spacing-14xl: 84rem;
+
+  --line-height-2xs: 0.9;
+  --line-height-xs: 1.1;
+  --line-height-sm: 1.2;
+  --line-height-md: 1.4;
+  --line-height-lg: 1.7;
+}
+
+body {
+  background-color: var(--green-extra-light);
+  font-family: "Roboto";
+}
+
 .App {
-  background-color: gray;
+  --grid-size: 600px;
+
   text-align: center;
-  width: 100vw;
-  height: 100vh;
+  width: var(--grid-size);
+  margin: 0 auto;
+  color: var(--green-darkest);
 }
 
 .Grid {
-  height: 100%;
+  margin-top: var(--spacing-3xl);
+  height: var(--grid-size);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  gap: 2px;
+  gap: var(--spacing-3xs);
 }
 
 .Grid > .Square {
-  background-color: white;
-  padding: 10px;
+  background-color: var(--blue-dark);
+  padding: var(--spacing-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Square__content {
+  font-size: var(--font-xxl);
+  color: var(--blue-light);
+}
+
+.Scoreboard {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  justify-content: space-between;
+}
+
+.Score__title {
+  margin: var(--spacing-sm);
+}
+
+.Score__count {
+  margin: var(--spacing-sm);
+  font-size: var(--font-lg);
+  font-weight: 500;
+}
+
+.Box {
+  margin-top: var(--spacing-3xl);
+  height: var(--grid-size);
+  background-color: var(--blue-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Box__title {
+  margin-top: 0;
+  color: var(--white);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 500;
+}
+
+h1 {
+  font-size: var(--font-xxl);
+}
+
+h2 {
+  font-size: var(--font-xl);
+}
+
+h3 {
+  font-size: var(--font-md);
+}
+
+p {
+  font-size: var(--font-sm);
+  line-height: var(--line-height-lg);
+}
+
+.Button {
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border: none;
+  cursor: pointer;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: var(--font-sm);
+  line-height: var(--line-height-md);
+  color: var(--grey-dark);
 }
